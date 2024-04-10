@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  mynodered:
+    container_name: mynodered
+    image: nodered/node-red
+    ports: 
+      - 1880:1880
+    volumes: 
+      - ~/Documents/projects/node-red-projects/data:/data
+  mongo:
+    image: mongo:4.4
+    container_name: mongo
+    environment:
+        - MONGO_INITDB_ROOT_USERNAME=root
+        - MONGO_INITDB_ROOT_PASSWORD=toor
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - ~/Documents/projects/mongo-database/db:/data/db
+      - ~/Documents/projects/mongo-database/dev.archive:/Databases/dev.archive
+      - ~/Documents/projects/mongo-database/production:/Databases/production

@@ -1,0 +1,517 @@
+[
+    {
+        "id": "96987942572babb4",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "efbf43c6ce09edfd",
+        "type": "mongodb3",
+        "uri": "mongodb://root:toor@192.168.15.113:27017/livros?authSource=admin",
+        "name": "",
+        "options": "",
+        "parallelism": "-1"
+    },
+    {
+        "id": "a9e07edd94b65680",
+        "type": "http in",
+        "z": "96987942572babb4",
+        "name": "createBook",
+        "url": "/book",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 230,
+        "y": 240,
+        "wires": [
+            [
+                "6574e108661752cd"
+            ]
+        ]
+    },
+    {
+        "id": "6574e108661752cd",
+        "type": "function",
+        "z": "96987942572babb4",
+        "name": "requestBodyToPayload",
+        "func": "msg.payload = msg.req.body;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 240,
+        "wires": [
+            [
+                "7042ae2390130201",
+                "67204efb1b19ba8e"
+            ]
+        ]
+    },
+    {
+        "id": "7042ae2390130201",
+        "type": "debug",
+        "z": "96987942572babb4",
+        "name": "debugRequestFunction",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "56c979c091111840",
+        "type": "http response",
+        "z": "96987942572babb4",
+        "name": "requestOk",
+        "statusCode": "",
+        "headers": {},
+        "x": 950,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "67204efb1b19ba8e",
+        "type": "mongodb3 in",
+        "z": "96987942572babb4",
+        "service": "_ext_",
+        "configNode": "efbf43c6ce09edfd",
+        "name": "insertBook",
+        "collection": "books",
+        "operation": "insertOne",
+        "x": 730,
+        "y": 240,
+        "wires": [
+            [
+                "56c979c091111840",
+                "0ec7821be1338eb7"
+            ]
+        ]
+    },
+    {
+        "id": "0ec7821be1338eb7",
+        "type": "debug",
+        "z": "96987942572babb4",
+        "name": "debugInsertBook",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "0ed2e543779e02cc",
+        "type": "http in",
+        "z": "96987942572babb4",
+        "name": "getAllBooks",
+        "url": "/book",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 230,
+        "y": 80,
+        "wires": [
+            [
+                "208edb86c185a5b8"
+            ]
+        ]
+    },
+    {
+        "id": "208edb86c185a5b8",
+        "type": "mongodb3 in",
+        "z": "96987942572babb4",
+        "service": "_ext_",
+        "configNode": "efbf43c6ce09edfd",
+        "name": "findAllToArray",
+        "collection": "books",
+        "operation": "find.toArray",
+        "x": 480,
+        "y": 80,
+        "wires": [
+            [
+                "87d73451bba229d1",
+                "6d66952e3770b8bf"
+            ]
+        ]
+    },
+    {
+        "id": "6d66952e3770b8bf",
+        "type": "http response",
+        "z": "96987942572babb4",
+        "name": "requestOk",
+        "statusCode": "",
+        "headers": {},
+        "x": 730,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "87d73451bba229d1",
+        "type": "debug",
+        "z": "96987942572babb4",
+        "name": "debugFindAll",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 530,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "f1e3a23804f5bc54",
+        "type": "http in",
+        "z": "96987942572babb4",
+        "name": "deleteBook",
+        "url": "/book",
+        "method": "delete",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 620,
+        "wires": [
+            [
+                "db6145fc91b3759e"
+            ]
+        ]
+    },
+    {
+        "id": "b86d0118f31b2e7c",
+        "type": "mongodb3 in",
+        "z": "96987942572babb4",
+        "service": "_ext_",
+        "configNode": "efbf43c6ce09edfd",
+        "name": "deleteBook",
+        "collection": "books",
+        "operation": "deleteOne",
+        "x": 990,
+        "y": 620,
+        "wires": [
+            [
+                "c253b14a242dda3b",
+                "a25bb56fad04e1f3"
+            ]
+        ]
+    },
+    {
+        "id": "db6145fc91b3759e",
+        "type": "function",
+        "z": "96987942572babb4",
+        "name": "requestParamToPayload",
+        "func": "var id = msg.req.query.id;\n\nmsg.payload = { \"_id\": id };\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 620,
+        "wires": [
+            [
+                "4ea1d1d75983ee3a",
+                "39f636cb6af1664d"
+            ]
+        ]
+    },
+    {
+        "id": "c253b14a242dda3b",
+        "type": "http response",
+        "z": "96987942572babb4",
+        "name": "requestOk",
+        "statusCode": "",
+        "headers": {},
+        "x": 1210,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "4ea1d1d75983ee3a",
+        "type": "debug",
+        "z": "96987942572babb4",
+        "name": "debugRequestFunction",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "a25bb56fad04e1f3",
+        "type": "debug",
+        "z": "96987942572babb4",
+        "name": "debugDeleteBook",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1110,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "39f636cb6af1664d",
+        "type": "objectid",
+        "z": "96987942572babb4",
+        "name": "ObjectId",
+        "selectedProperty": "_id",
+        "x": 760,
+        "y": 620,
+        "wires": [
+            [
+                "b86d0118f31b2e7c",
+                "ce495350a31469ab"
+            ]
+        ]
+    },
+    {
+        "id": "ce495350a31469ab",
+        "type": "debug",
+        "z": "96987942572babb4",
+        "name": "debugObjectId",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "f3a240881db0d1bc",
+        "type": "function",
+        "z": "96987942572babb4",
+        "name": "requestBodyToPayload",
+        "func": "msg.payload = [\n    {\n        \"title\": msg.req.body.titleKey\n    }\n    ,\n    { \n        \"$set\": {\n            \"title\": msg.req.body.title,\n            \"author\": msg.req.body.author,\n            \"quantity\": msg.req.body.quantity\n        }\n    }\n    \n];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 440,
+        "wires": [
+            [
+                "9a58161e095a4fe5",
+                "48adb06b5026f300"
+            ]
+        ]
+    },
+    {
+        "id": "7d6ceadbc20377cc",
+        "type": "http in",
+        "z": "96987942572babb4",
+        "name": "updateBook",
+        "url": "/book",
+        "method": "put",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 230,
+        "y": 440,
+        "wires": [
+            [
+                "f3a240881db0d1bc"
+            ]
+        ]
+    },
+    {
+        "id": "48adb06b5026f300",
+        "type": "mongodb3 in",
+        "z": "96987942572babb4",
+        "service": "_ext_",
+        "configNode": "efbf43c6ce09edfd",
+        "name": "updateBook",
+        "collection": "books",
+        "operation": "updateOne",
+        "x": 770,
+        "y": 440,
+        "wires": [
+            [
+                "380ef66a4dd2eacd",
+                "f79b93029f0be3e3"
+            ]
+        ]
+    },
+    {
+        "id": "380ef66a4dd2eacd",
+        "type": "http response",
+        "z": "96987942572babb4",
+        "name": "requestOk",
+        "statusCode": "",
+        "headers": {},
+        "x": 1010,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "9a58161e095a4fe5",
+        "type": "debug",
+        "z": "96987942572babb4",
+        "name": "debugRequestFunction",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "f79b93029f0be3e3",
+        "type": "debug",
+        "z": "96987942572babb4",
+        "name": "debugUpdateBook",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "b9236c715cdf78e3",
+        "type": "mongodb3 in",
+        "z": "96987942572babb4",
+        "service": "_ext_",
+        "configNode": "efbf43c6ce09edfd",
+        "name": "aggregateBook",
+        "collection": "books",
+        "operation": "aggregate.toArray",
+        "x": 960,
+        "y": 840,
+        "wires": [
+            [
+                "147ae96fc4cff13a",
+                "df2bb574ac584042"
+            ]
+        ]
+    },
+    {
+        "id": "d541bda7b745543c",
+        "type": "http in",
+        "z": "96987942572babb4",
+        "name": "getBookByTitleWithSortedQuantity",
+        "url": "/book-name-sorted",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 300,
+        "y": 840,
+        "wires": [
+            [
+                "f61f0f0dcdd0808f"
+            ]
+        ]
+    },
+    {
+        "id": "147ae96fc4cff13a",
+        "type": "http response",
+        "z": "96987942572babb4",
+        "name": "requestOk",
+        "statusCode": "",
+        "headers": {},
+        "x": 1230,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "df2bb574ac584042",
+        "type": "debug",
+        "z": "96987942572babb4",
+        "name": "debugAggregate",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1030,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "ce743b75a5213350",
+        "type": "debug",
+        "z": "96987942572babb4",
+        "name": "debugAggregateFunction",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "f61f0f0dcdd0808f",
+        "type": "function",
+        "z": "96987942572babb4",
+        "name": "aggregateFunction",
+        "func": "msg.payload = [\n    {\n        $match:\n        {\n            \"author\": msg.req.query.author\n        }\n    },\n    {\n        $sort: { \"quantity\": -1 }\n    }\n]\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 840,
+        "wires": [
+            [
+                "b9236c715cdf78e3",
+                "ce743b75a5213350"
+            ]
+        ]
+    }
+]
